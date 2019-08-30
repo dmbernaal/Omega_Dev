@@ -1,0 +1,7 @@
+echo "installing depedencies"
+
+oandapyV20==0.6.3
+mpl-finance==0.10.0
+tqdm==4.35.0
+
+echo "finished"

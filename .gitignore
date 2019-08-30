@@ -1,0 +1,11 @@
+./Model_Z/raw_data/*
+./Model_Z/post_processing/*
+./Model_Z/model_data/*
+
+./Model_A/raw_data/*
+./Model_A/post_processing/*
+./Model_A/model_data/*
+
+./Model_B/raw_data/*
+./Model_B/post_processing/*
+./Model_B/model_data/*
