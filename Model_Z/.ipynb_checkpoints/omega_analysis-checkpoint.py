@@ -13,7 +13,8 @@ def return_open_close_change(df_, target_):
     df = df_.copy()
     
     # creating our series
-    change = df['open'] - df['close'].shift(target_ - 1)
+#     change = df['open'] - df['close'].shift(target_ - 1)
+    change = ((df['open'] - df['close'].shift(target_ - 1)) / df['close'].shift(target_ - 1)) 
     
     return change
 
