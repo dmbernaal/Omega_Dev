@@ -136,7 +136,7 @@ def simulate_thresh_test_trade_simple(sequence, buy_threshold, sell_threshold, s
         return start_cap, bc, roi, buy_threshold, sell_threshold, change_window
 
 
-def simulate_thresh_test_trade(sequence, buy_threshold, sell_threshold, start_cap, print_trades=True, return_attr=True):
+def simulate_thresh_test_trade(sequence, buy_threshold, sell_threshold, start_cap, print_trades=True, return_attr=True, margin_trading=False):
     """
     This function will simulate a trade when given a sequence dataframe with a specific column holding percentage change values. 
     
@@ -195,6 +195,11 @@ def simulate_thresh_test_trade(sequence, buy_threshold, sell_threshold, start_ca
     
     # tracking metrics
     total_transaction_costs = 0
+    
+    # checking for margin trading
+    if margin_trading:
+        bc = margin_trade(bc)
+        beginning_leverage = bc
     
     # Trading
     for i in range(len(sequence)):
@@ -285,6 +290,8 @@ def simulate_thresh_test_trade(sequence, buy_threshold, sell_threshold, start_ca
     
     # logging our performance
     print(f'Starting capital: {start_cap}')
+    if margin_trading:
+        print(f'Beginning Leverage: {beginning_leverage}')
     print(f'Ending capital: {bc}')
     print(f'Return on investment: {roi}%')
     print(f'Total Transaction cost: {total_transaction_costs}')
@@ -311,3 +318,36 @@ def omega_oanda_core_cost(h, spread=0.00002):
     core_cost = spread_cost + ((h / 100000) * 5)
     
     return core_cost
+
+
+def margin_trade(margin, leverage=20):
+    """
+    This will function will allow for margin trading which takes in the brokers leverage and how many assets you want to leverage which is the margin.
+    
+    Example: If your broker provides a 20:1 leverage, and your margin (down payment) is $1000, this means you will be able to use $20,000 in buying power
+    
+    ARGS:
+        leverage: <int> the multiplier
+        margin: <float> our downpayment, how much we are willing to leverage 
+    """
+    return margin * leverage
+
+def calculate_margin_trade(low, high, h_lot, leverage=20):
+    """
+    This function is for exploratory purposes: We provide a given positions open and high which we will take to calculate the middle. Then from the leverage and lot size we want, we can return the total margin required for that trade. 
+    
+    That is, the total down payment to buy h_lot amount of asset.
+    
+    ARGS:
+        low: <float> the lowest price of the asset at n time, this is the open for testing purposes
+        high: <float> the highest price of the asset at n time
+        h_lot: <int> how many of x asset we want to buy
+        leverage: <int> the leverage provided from the broker
+    """
+    mid = (low + high) / 2
+    h = h_lot * mid
+    
+    # calculating our margin, this is the minimum downpayment of the trade
+    margin = (1/leverage) * h
+    
+    return margin
