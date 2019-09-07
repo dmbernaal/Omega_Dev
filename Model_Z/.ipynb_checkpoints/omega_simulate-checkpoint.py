@@ -123,7 +123,7 @@ def simulate_thresh_test_trade_simple(sequence, buy_threshold, sell_threshold, s
         print('Selling off shares, a sell execution was not triggered but we are displaying this for the sake of displaying metrics')
         bc = bc + (h * tnf) 
     
-    roi = (bc / starting_cap) * 100
+    roi = ((bc - starting_cap) / starting_cap) * 100
     roi = int(roi)
     
     # logging our performance
@@ -285,7 +285,7 @@ def simulate_thresh_test_trade(sequence, buy_threshold, sell_threshold, start_ca
         total_transaction_costs += core_cost
         bc = bc - core_cost
     
-    roi = (bc / starting_cap) * 100
+    roi = ((bc - starting_cap) / starting_cap) * 100
     roi = int(roi)
     
     # logging our performance
