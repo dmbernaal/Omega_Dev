@@ -1,3 +1,9 @@
+./model_data
+./model_data/
 ./model_data/*
+./post_processing
+./post_processing/
 ./post_processing/*
+./raw_data
+./raw_data/
 ./raw_data/*
