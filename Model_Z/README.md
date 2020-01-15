@@ -1,4 +1,4 @@
-# Model Z
+# Omega - Model_Z
 In this sub-repository we have everything to do with ```Model_Z``` **PUBLIC** from custom ```Omega``` Scripts (part of the private Omega Framework). 
 
 This root directory contains everything from scripts to: Downloading raw data, pre-processing, analysing, running trading algoritms (simulations for testing). 
